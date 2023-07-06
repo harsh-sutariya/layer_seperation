@@ -1,0 +1,67 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Segmentation</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Image Segmentation</h1>
+    <form action="/segment" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept=".jpg, .jpeg, .png">
+        <input type="submit" value="Upload">
+    </form>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Segmentation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Segmentation</h1>
+        <form method="post" action="{{ url_for('segment_image') }}" enctype="multipart/form-data">
+            <input type="file" name="image" id="imageInput" accept=".jpg, .jpeg, .png">
+            <br>
+            <h2>Segmentation Parameters</h2>
+            <label for="pointsPerSide">Points Per Side:</label>
+            <input type="number" name="pointsPerSide" id="pointsPerSide" min="8" max="128" value="32">
+            <br>
+            <label for="predIouThresh">Pred IOU Threshold:</label>
+            <input type="number" name="predIouThresh" id="predIouThresh" step="0.01" min="0.0" max="1.0" value="0.9">
+            <br>
+            <label for="stabilityScoreThresh">Stability Score Threshold:</label>
+            <input type="number" name="stabilityScoreThresh" id="stabilityScoreThresh" step="0.01" min="0.0" max="1.0" value="0.96">
+            <br>
+            <label for="cropNLayers">Crop N Layers:</label>
+            <input type="number" name="cropNLayers" id="cropNLayers" min="0" max="5" value="1">
+            <br>
+            <label for="cropNPointsDownscaleFactor">Crop N Points Downscale Factor:</label>
+            <input type="number" name="cropNPointsDownscaleFactor" id="cropNPointsDownscaleFactor" min="1" max="8" value="2">
+            <br>
+            <label for="minMaskRegionArea">Min Mask Region Area:</label>
+            <input type="number" name="minMaskRegionArea" id="minMaskRegionArea" min="1" max="1000" value="100">
+            <br>
+            <h2>Output Image Parameters</h2>
+            <label for="outputImageDpi">DPI:</label>
+            <input type="number" name="outputImageDpi" id="outputImageDpi" min="50" max="300" value="100">
+            <br>
+            <label for="outputImageSizeHeight">Height (px):</label>
+            <input type="number" name="outputImageSizeHeight" id="outputImageSizeHeight" min="100" max="2000" value="900">
+            <br>
+            <label for="outputImageSizeBreadth">Breadth (px):</label>
+            <input type="number" name="outputImageSizeBreadth" id="outputImageSizeBreadth" min="100" max="2000" value="906">
+            <br>
+            <input type="submit" value="Segment Image" class="submit-button">
+        </form>
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
